@@ -2,6 +2,8 @@ import PostPage from "./default";
 
 import { getAllPostsSlugs, getPostBySlug } from "@/lib/sanity/client";
 
+export const dynamic = "force-dynamic";
+
 export async function generateStaticParams() {
   return await getAllPostsSlugs();
 }
