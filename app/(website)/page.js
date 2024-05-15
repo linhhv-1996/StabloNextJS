@@ -84,7 +84,7 @@ export default async function IndexPage() {
 
 
                 <Link
-                  className={cx(idx === 0 ? "relative block aspect-[5/4]" : "relative block aspect-video")} href={`/post/${posts[0].slug.current}`}>
+                  className={cx(idx === 0 ? "relative block aspect-[5/4]" : "relative block aspect-video")} href={`/post/${post.slug.current}`}>
                   <Image src={urlForImage(post.mainImage)} alt={post.mainImage?.alt || "Thumbnail"} loading="lazy" fill
                     sizes="(max-width: 768px) 30vw, 33vw" className="object-cover " />
                 </Link>
@@ -119,7 +119,7 @@ export default async function IndexPage() {
                       href={`/author/${post?.author?.name}`}>
                       <div className="flex items-center gap-3">
                         <div className="relative h-5 w-5 flex-shrink-0">
-                          <Image src={urlForImage(post.author.image)} alt={posts[3].mainImage?.alt || "Thumbnail"}
+                          <Image src={urlForImage(post.author.image)} alt={post.mainImage?.alt || "Thumbnail"}
                             loading="lazy" fill sizes="(max-width: 768px) 30vw, 33vw" className="object-cover rounded-full" />
                         </div>
                         <span className="truncate text-sm">
