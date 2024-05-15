@@ -13,10 +13,6 @@ import { myLoader } from "@/utils/all";
 export default function Navbar(props) {
   const leftmenu = [
     {
-      label: "Home",
-      href: "/"
-    },
-    {
       label: "About",
       href: "/about"
     },
@@ -28,16 +24,12 @@ export default function Navbar(props) {
 
   const rightmenu = [
     {
-      label: "Archive",
+      label: "Blog",
       href: "/archive"
     },
     {
-      label: "Privacy",
-      href: "/archive"
-    },
-    {
-      label: "Terms",
-      href: "/archive"
+      label: "Search",
+      href: "/search"
     },
   ];
 

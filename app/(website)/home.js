@@ -7,16 +7,6 @@ export default function Post({ posts }) {
     <>
       {posts && (
         <Container>
-          {/* <div className="grid gap-10 md:grid-cols-2 lg:gap-10 ">
-            {posts.slice(0, 2).map(post => (
-              <PostList
-                key={post._id}
-                post={post}
-                aspect="landscape"
-                preloadImage={true}
-              />
-            ))}
-          </div> */}
 
           <div className="flex items-center justify-center mt-0"><h3 className="text-2xl"><strong>Our</strong> Latest</h3></div>
           <div className="mt-10 grid gap-10 md:grid-cols-2 lg:gap-10 xl:grid-cols-3 ">
