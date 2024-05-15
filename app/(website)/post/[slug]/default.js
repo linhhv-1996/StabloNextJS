@@ -8,10 +8,11 @@ import { parseISO, format } from "date-fns";
 
 import CategoryLabel from "@/components/blog/category";
 import AuthorCard from "@/components/blog/authorCard";
+import { titleCase } from "@/utils/all";
 
 
 export default function Post(props) {
-  const { loading, post, related } = props;
+  const { loading, post, related, categories } = props;
 
   const slug = post?.slug;
 
@@ -31,66 +32,6 @@ export default function Post(props) {
 
   return (
     <>
-      {/* <Container className="!pt-0">
-        <div className="mx-auto max-w-screen-md ">
-          <div className="flex justify-center">
-            <CategoryLabel categories={post.categories} />
-          </div>
-
-          <h1 className="text-brand-primary mb-3 mt-2 text-center text-3xl font-semibold tracking-tight dark:text-white lg:text-4xl lg:leading-snug">
-            {post.title}
-          </h1>
-
-          <div className="mt-3 flex justify-center space-x-3 text-gray-500 ">
-            <div className="flex items-center gap-3">
-              <div className="relative h-10 w-10 flex-shrink-0">
-                {AuthorimageProps && (
-                  <Link href={`/author/${post.author.slug.current}`}>
-                    <Image
-                      src={AuthorimageProps.src}
-                      alt={post?.author?.name}
-                      className="rounded-full object-cover"
-                      fill
-                      sizes="40px"
-                    />
-                  </Link>
-                )}
-              </div>
-              <div>
-                <p className="text-gray-800 dark:text-gray-400">
-                  <Link href={`/author/${post.author.slug.current}`}>
-                    {post.author.name}
-                  </Link>
-                </p>
-                <div className="flex items-center space-x-2 text-sm">
-                  <time
-                    className="text-gray-500 dark:text-gray-400"
-                    dateTime={post?.publishedAt || post._createdAt}>
-                    {format(
-                      parseISO(post?.publishedAt || post._createdAt),
-                      "MMMM dd, yyyy"
-                    )}
-                  </time>
-                  <span>· {post.estReadingTime || "5"} min read</span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </Container> */}
-      {/* <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg">
-        {imageProps && (
-          <Image
-            src={imageProps.src}
-            alt={post.mainImage?.alt || "Thumbnail"}
-            loading="eager"
-            fill
-            sizes="100vw"
-            className="object-cover"
-          />
-        )}
-      </div> */}
-
       <div className="relative z-0 flex min-h-[calc(100vh-30vh)] items-center">
         <div className="absolute -z-10 h-full w-full before:absolute before:z-10 before:h-full before:w-full before:bg-black/30">
           <Image
@@ -147,8 +88,10 @@ export default function Post(props) {
         </div>
       </div>
 
-      <Container>
-        <article className="mx-auto max-w-screen-md ">
+      <div className="mx-auto mt-14 flex max-w-screen-xl flex-col gap-5 px-5 md:flex-row">
+        {/* <article className="mx-auto max-w-screen-md "> */}
+        <article className="flex-1">
+        
           <div className="prose mx-auto my-3 dark:prose-invert prose-a:text-blue-600">
             {post.body && <PortableText value={post.body} />}
           </div>
@@ -160,69 +103,82 @@ export default function Post(props) {
             </Link>
           </div>
           {post.author && <AuthorCard author={post.author} />}
-
-          {/* Related posts */}
-          <div className="related mt-10">
-            <h1 className="text-brand-primary mb-3 mt-2 text-3xl font-semibold tracking-tight dark:text-white lg:text-4xl lg:leading-snug">Related</h1>
-            <div className="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-2 ">
-
-              {related.map((post, idx) => (
-                <div key={idx} className="group cursor-pointer">
-                  <div className="overflow-hidden rounded-md bg-gray-100 transition-all hover:scale-105 dark:bg-gray-800">
-                    <Link
-                      className="relative block aspect-video"
-                      href={`/post/${post.slug.current}`}>
-                      <Image
-                        src={urlForImage(post.image)}
-                        alt={post.mainImage?.alt || "Thumbnail"}
-                        loading="lazy"
-                        fill
-                        sizes="(max-width: 768px) 30vw, 33vw"
-                        className="object-cover transition-all"
-                      />
-                    </Link>
-                  </div>
-                  <div className="">
-                    <div>
-                      <CategoryLabel categories={cates} />
-                      <h2 className="text-lg line-clamp-2 font-medium  tracking-normal text-black mt-2 dark:text-white">
-                        <Link
-                          className="aspect-video"
-                          href={`/post/${post.slug.current}`}>
-                          <span className="bg-gradient-to-r from-green-200 to-green-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px] dark:from-purple-800 dark:to-purple-900">
-                            {post.title}
-                          </span>
-                        </Link>
-                      </h2>
-                      <div className="hidden">
-                        <p className="mt-2 line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
-                          <Link
-                            className="relative block aspect-video"
-                            href={`/post/${post.slug.current}`}></Link>
-                        </p>
-                      </div>
-
-                      <div className="mt-3 flex items-center space-x-3 text-gray-500 dark:text-gray-400">
-                        <time
-                          className="text-gray-500 dark:text-gray-400"
-                          dateTime={post?.date || post.date}>
-                          {format(
-                            parseISO(post?.date || post.date),
-                            "MMMM dd, yyyy"
-                          )}
-                        </time>
-                      </div>
-
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
-          {/* Related posts */}
-
         </article>
-      </Container>
+
+        <aside className="sticky top-0 w-full self-start md:w-96">
+  <div className="mt-5 font-sans">
+    <div>
+      <h3 className="text-2xl font-bold dark:text-white">Search Posts</h3>
+      <form action="/search" method="GET" className="mt-4">
+        <div className="relative">
+          <input placeholder="Search" id="q" className="w-full px-3 py-2 border rounded-md outline-none focus:border-gray-300 focus:shadow-sm dark:bg-gray-900 dark:border-gray-600 dark:focus:border-white" type="text" name="q"></input>
+          <div className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" aria-hidden="true" data-slot="icon" className="w-4 h-4 text-gray-400">
+              <path strokeLinecap="round" strokeLinejoin="round" d="m21 21-5.197-5.197m0 0A7.5 7.5 0 1 0 5.196 5.196a7.5 7.5 0 0 0 10.607 10.607Z"></path>
+            </svg>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div className="mt-10">
+      <h3 className="text-2xl font-bold dark:text-white">Related</h3>
+      <div className="grid gap-6 mt-6">
+
+      {related.map((post, idx) => (
+        <Link href={`/post/${post.slug.current}`}>
+                <div className="flex gap-5">
+                <div className="relative w-24 h-20 overflow-hidden rounded-md shrink-0">
+                <Image
+                    src={urlForImage(post.image)}
+                    alt={post.image?.alt || "Thumbnail"}
+                    loading="eager"
+                    fill
+                    sizes="100vw"
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h3 className="font-medium dark:text-white">{post.title}</h3>
+                  <p className="mt-2 text-sm text-gray-100">
+                  <time
+                    className="text-gray-500 dark:text-gray-100"
+                    dateTime={post?.date}>
+                    {format(
+                      parseISO(post?.date),
+                      "MMMM dd, yyyy"
+                    )}
+                  </time>
+                  </p>
+                </div>
+              </div>
+        </Link>
+        
+
+     
+      ))}
+        
+
+
+      </div>
+    </div>
+    <div className="mt-10">
+      <h3 className="text-2xl font-bold dark:text-white">Categories</h3>
+      <ul className="grid mt-4">
+
+      {categories.map((cate, idx) => (
+        <li>
+          <Link className="flex items-center justify-between py-2" href={`/category/${cate.category}`}>
+          <h4 className="text-gray-800 dark:text-gray-400">{titleCase(cate.category)}</h4>
+          </Link>
+      </li>
+      ))}
+  
+      </ul>
+    </div>
+  </div>
+</aside>
+        
+      </div>
     </>
   );
 }

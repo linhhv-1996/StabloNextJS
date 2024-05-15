@@ -6,3 +6,5 @@ export const cx = (...classNames) =>
 export const myLoader = ({ src }) => {
   return src;
 };
+
+export const titleCase = (s) => s.replace(/^-*(.)|-+(.)/g, (s, c, d) => c ? c.toUpperCase() : ' ' + d.toUpperCase());
