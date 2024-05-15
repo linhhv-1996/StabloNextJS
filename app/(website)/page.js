@@ -75,7 +75,7 @@ export default async function IndexPage() {
         <div className="grid gap-10 mt-0 mb-0 lg:gap-10 md:grid-cols-3 lg:grid-cols-4 ">
 
           {posts.slice(1, 6).map((post, idx) => (
-            <div className={cx(
+            <div key={idx} className={cx(
               idx === 0
                 ? "group cursor-pointer md:col-span-2 md:row-span-2"
                 : "group cursor-pointer"

@@ -10,6 +10,8 @@ import cx from "clsx";
 import { ChevronDownIcon } from "@heroicons/react/24/solid";
 import { myLoader } from "@/utils/all";
 
+export const dynamic = "force-dynamic";
+
 export default function Navbar(props) {
   const leftmenu = [
     {
