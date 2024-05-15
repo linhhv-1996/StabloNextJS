@@ -69,7 +69,6 @@ export default async function IndexPage() {
 
       <div className="flex items-center justify-center mt-10"><h2 className="text-2xl"><strong>Featured</strong> Posts</h2></div>
 
-
       {/* Featured */}
       <div className="container px-8 mx-auto xl:px-5  max-w-screen-xl py-5 lg:py-8">
 
