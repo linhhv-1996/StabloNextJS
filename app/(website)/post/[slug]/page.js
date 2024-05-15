@@ -15,7 +15,8 @@ export async function generateMetadata({ params }) {
 
 export default async function PostDefault({ params }) {
   const post = await getPostBySlug(params.slug);
-  return <PostPage post={post} />;
+  const relatedPosts = post.related.filter((item) => item.slug.current != params.slug).slice(0, 2);
+  return <PostPage post={post} related={relatedPosts}/>;
 }
 
 // export const revalidate = 60;

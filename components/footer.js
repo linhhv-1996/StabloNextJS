@@ -37,9 +37,7 @@ export default function Footer(props) {
           </a>
         </span>
       </div>
-      <div className="mt-2 flex items-center justify-between">
-        <div className="mt-5">
-        </div>
+      <div className="flex items-center justify-center mt-2">
         <ThemeSwitch />
       </div>
       <Backlink />

@@ -9,8 +9,9 @@ import { parseISO, format } from "date-fns";
 import CategoryLabel from "@/components/blog/category";
 import AuthorCard from "@/components/blog/authorCard";
 
+
 export default function Post(props) {
-  const { loading, post } = props;
+  const { loading, post, related } = props;
 
   const slug = post?.slug;
 
@@ -26,9 +27,11 @@ export default function Post(props) {
     ? urlForImage(post.author.image)
     : null;
 
+  const cates = post?.categories;
+
   return (
     <>
-      <Container className="!pt-0">
+      {/* <Container className="!pt-0">
         <div className="mx-auto max-w-screen-md ">
           <div className="flex justify-center">
             <CategoryLabel categories={post.categories} />
@@ -74,9 +77,8 @@ export default function Post(props) {
             </div>
           </div>
         </div>
-      </Container>
-
-      <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg">
+      </Container> */}
+      {/* <div className="relative z-0 mx-auto aspect-video max-w-screen-lg overflow-hidden lg:rounded-lg">
         {imageProps && (
           <Image
             src={imageProps.src}
@@ -87,6 +89,62 @@ export default function Post(props) {
             className="object-cover"
           />
         )}
+      </div> */}
+
+      <div className="relative z-0 flex min-h-[calc(100vh-30vh)] items-center">
+        <div className="absolute -z-10 h-full w-full before:absolute before:z-10 before:h-full before:w-full before:bg-black/30">
+          <Image
+            src={imageProps.src}
+            alt={post.mainImage?.alt || "Thumbnail"}
+            loading="eager"
+            fill
+            sizes="100vw"
+            className="object-cover"
+          />
+        </div>
+        <div className="mx-auto max-w-screen-md px-5 py-20">
+          <h1 className="text-brand-primary mb-3 mt-2 text-3xl font-semibold tracking-tight text-white lg:text-5xl lg:leading-tight">
+            {post.title}
+          </h1>
+          <div className="mt-8 flex space-x-3 text-gray-500 ">
+            <div className="flex flex-col gap-3 md:flex-row md:items-center">
+              <div className="flex gap-3">
+                <div className="relative h-5 w-5 flex-shrink-0">
+                  <a href="/author/mario-sanchez">
+                    <Image
+                      src={AuthorimageProps.src}
+                      alt={post?.author?.name}
+                      className="rounded-full object-cover"
+                      fill
+                      sizes="40px"
+                    />
+                  </a>
+                </div>
+                <p className="text-gray-100 ">
+                  <Link href={`/author/${post.author.slug.current}`}>
+                    {post.author.name}
+                  </Link>
+                  <span className="hidden pl-2 md:inline"> ·</span>
+                </p>
+              </div>
+              <div>
+                <div className="flex space-x-2 text-sm md:flex-row md:items-center">
+                  <time
+                    className="text-gray-100 dark:text-gray-100"
+                    dateTime={post?.publishedAt || post._createdAt}>
+                    {format(
+                      parseISO(post?.publishedAt || post._createdAt),
+                      "MMMM dd, yyyy"
+                    )}
+                  </time>
+                  <span className="text-gray-100">
+                    <span>· {post.estReadingTime || "5"} min read</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
 
       <Container>
@@ -102,6 +160,67 @@ export default function Post(props) {
             </Link>
           </div>
           {post.author && <AuthorCard author={post.author} />}
+
+          {/* Related posts */}
+          <div className="related mt-10">
+            <h1 className="text-brand-primary mb-3 mt-2 text-3xl font-semibold tracking-tight dark:text-white lg:text-4xl lg:leading-snug">Related</h1>
+            <div className="grid gap-10 mt-10 lg:gap-10 md:grid-cols-2 xl:grid-cols-2 ">
+
+              {related.map((post, idx) => (
+                <div key={idx} className="group cursor-pointer">
+                  <div className="overflow-hidden rounded-md bg-gray-100 transition-all hover:scale-105 dark:bg-gray-800">
+                    <Link
+                      className="relative block aspect-video"
+                      href={`/post/${post.slug.current}`}>
+                      <Image
+                        src={urlForImage(post.image)}
+                        alt={post.mainImage?.alt || "Thumbnail"}
+                        loading="lazy"
+                        fill
+                        sizes="(max-width: 768px) 30vw, 33vw"
+                        className="object-cover transition-all"
+                      />
+                    </Link>
+                  </div>
+                  <div className="">
+                    <div>
+                      <CategoryLabel categories={cates} />
+                      <h2 className="text-lg line-clamp-2 font-medium  tracking-normal text-black mt-2 dark:text-white">
+                        <Link
+                          className="aspect-video"
+                          href={`/post/${post.slug.current}`}>
+                          <span className="bg-gradient-to-r from-green-200 to-green-100 bg-[length:0px_10px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 hover:bg-[length:100%_3px] group-hover:bg-[length:100%_10px] dark:from-purple-800 dark:to-purple-900">
+                            {post.title}
+                          </span>
+                        </Link>
+                      </h2>
+                      <div className="hidden">
+                        <p className="mt-2 line-clamp-3 text-sm text-gray-500 dark:text-gray-400">
+                          <Link
+                            className="relative block aspect-video"
+                            href={`/post/${post.slug.current}`}></Link>
+                        </p>
+                      </div>
+
+                      <div className="mt-3 flex items-center space-x-3 text-gray-500 dark:text-gray-400">
+                        <time
+                          className="text-gray-500 dark:text-gray-400"
+                          dateTime={post?.date || post.date}>
+                          {format(
+                            parseISO(post?.date || post.date),
+                            "MMMM dd, yyyy"
+                          )}
+                        </time>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+          {/* Related posts */}
+
         </article>
       </Container>
     </>
